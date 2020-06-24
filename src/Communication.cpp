@@ -4,7 +4,7 @@
 
 Communication::Communication(uint64_t sweeps)
 {
-	/* Reserve and create communication queue, synchronization mechanism and message buffers for all processes */
+	/* Reserve and create communication queue and synchronization mechanism */
 	comm.reserve(sweeps * 2 - 1);
 	sync.reserve(sweeps * 2 - 1);
 

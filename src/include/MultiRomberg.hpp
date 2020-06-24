@@ -7,7 +7,12 @@
 
 class MultiRomberg {
 public:
-	MultiRomberg(double (*f)(double), const double a, const double b, const uint64_t _sweeps);
+	MultiRomberg(
+		double (*f)(double), 
+		const double a, 
+		const double b, 
+		const uint64_t _sweeps
+	);
 
 	void wait();
 	double get_ans();

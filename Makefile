@@ -22,5 +22,6 @@ $(SRCDIR)/%.o: $(SRCDIR)/%.cpp*
 
 clean:
 	@rm $(TARGET)
+	@rm $(SRCDIR)/*.o
 
 .PHONY: clean

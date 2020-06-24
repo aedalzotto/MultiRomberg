@@ -6,7 +6,14 @@
 
 class CTR {
 public:
-	CTR(Communication &_comm, double (*_f)(double), const double _a, const double _b, const uint64_t _sweeps, double* _table);
+	CTR(
+		Communication &_comm, 
+		double (*_f)(double), 
+		const double _a, 
+		const double _b, 
+		const uint64_t _sweeps, 
+		double* _table
+	);
 
 	void run(uint64_t i);
 

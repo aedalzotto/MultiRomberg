@@ -23,10 +23,14 @@ MultiRomberg::MultiRomberg(
 	threads.reserve(sweeps * 2 - 1);
 
 	for(uint64_t i = 0; i < sweeps; i++)
-		threads.push_back(std::thread(&CTR::run, CTR(comm, f, a, b, sweeps, table), i));
+		threads.push_back(
+			std::thread(&CTR::run, CTR(comm, f, a, b, sweeps, table), i)
+		);
 
 	for(uint64_t i = sweeps; i < sweeps * 2 - 1; i++)
-		threads.push_back(std::thread(&Romberg::run, Romberg(comm, sweeps, table), i));
+		threads.push_back(
+			std::thread(&Romberg::run, Romberg(comm, sweeps, table), i)
+		);
 }
 
 void MultiRomberg::wait()
