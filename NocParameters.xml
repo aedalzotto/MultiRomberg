@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<COMMUNICATION_INFRASTRUCTURE>
+  <NOC>
+    <TOPOLOGY_PARAMETERS id="mesh">
+      <NOC lines="2" columns="2" height="1" />
+      <TILE tile_width="1.0" tile_height="1.0" tile_depth="1.0" />
+      <ROUTER buffer_length="4" />
+    </TOPOLOGY_PARAMETERS>
+    <TIMING_PARAMETERS frequency="4.0" linking_cycles="1" routing_cycles="1" />
+    <ENERGY_PARAMETERS prouter="0.0">
+      <WITHOUT_TRANSITION elwphit="0.1" elhphit="0.1" ecphit="0.05" esphit="0.5" ebphit="1.5" etphit="1.5" />
+      <WITH_TRANSITION elws_phit="0.0" elhs_phit="0.0" ecs_phit="0.0" ess_phit="0.0" ebs_phit="0.0" ets_phit="0.0" />
+    </ENERGY_PARAMETERS>
+  </NOC>
+</COMMUNICATION_INFRASTRUCTURE>
+

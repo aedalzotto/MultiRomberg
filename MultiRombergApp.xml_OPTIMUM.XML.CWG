@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<APPLICATION_PARTITIONING>
+  <RESULTS total_cost="168.75" status="ok" />
+  <SIZE lines="2" columns="2" height="2" />
+  <PROCESSOR_TYPE type="AVR">
+    <CLUSTER name="P0" load="104" power="3.5">T8 T5 T3 T12 T0</CLUSTER>
+    <CLUSTER name="P1" load="32" power="3.5">T6 T1</CLUSTER>
+    <CLUSTER name="P2" load="8" power="6.5">T7</CLUSTER>
+    <CLUSTER name="P3" load="64" power="3.5">T11 T4 T13 T10 T14 T9 T2</CLUSTER>
+  </PROCESSOR_TYPE>
+  <COMMUNICATION_LIST>
+    <SOURCE_CLUSTER source="P0">
+      <COMMUNICATION target="P3" volume="88" />
+      <COMMUNICATION target="P1" volume="16" />
+    </SOURCE_CLUSTER>
+    <SOURCE_CLUSTER source="P1">
+      <COMMUNICATION target="P0" volume="16" />
+      <COMMUNICATION target="P2" volume="8" />
+      <COMMUNICATION target="P3" volume="8" />
+    </SOURCE_CLUSTER>
+    <SOURCE_CLUSTER source="P2">
+      <COMMUNICATION target="P0" volume="8" />
+    </SOURCE_CLUSTER>
+    <SOURCE_CLUSTER source="P3">
+      <COMMUNICATION target="P0" volume="64" />
+    </SOURCE_CLUSTER>
+  </COMMUNICATION_LIST>
+</APPLICATION_PARTITIONING>
+

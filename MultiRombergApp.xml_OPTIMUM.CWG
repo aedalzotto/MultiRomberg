@@ -1,0 +1,14 @@
+#_NoC_Size (lines columns height)
+ 2 2 1
+
+#_CWG_Vertices (list of: vertices)
+ P0 P1 P2 P3
+
+#_CWG_Edges (list of: sourceVertex - targetVertex numberOfPhitsTransmited)
+ P0 - P3 88
+ P0 - P1 16
+ P1 - P0 16
+ P1 - P2 8
+ P1 - P3 8
+ P2 - P0 8
+ P3 - P0 64

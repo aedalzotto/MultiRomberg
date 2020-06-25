@@ -2,58 +2,58 @@
 <SYSTEM_SPECIFICATION>
   <TARGET_ARCHITECTURE>
     <PROCESSOR_TYPE_LIST>
-      <PROCESSOR_TYPE type="MIPS">
-        <FEATURES frequency="1500.0" width="0.5" height="0.7" depth="0.5" />
-        <LIST>P1 P2 P3 P4</LIST>
+      <PROCESSOR_TYPE type="AVR">
+        <FEATURES frequency="16.0" width="0.5" height="0.7" depth="0.5" />
+        <LIST>P0 P1 P2 P3</LIST>
       </PROCESSOR_TYPE>
     </PROCESSOR_TYPE_LIST>
   </TARGET_ARCHITECTURE>
   <APPLICATION_CHARACTERIZATION>
     <TASK_LIST>
       <TASK id="T0">
-        <PROCESSOR_TYPE type="MIPS" power="1.00" data="48" code="617" cpuOccupation="1" />
+        <PROCESSOR_TYPE type="AVR" power="0.10" data="48" code="617" cpuOccupation="1" />
       </TASK>
       <TASK id="T1">
-        <PROCESSOR_TYPE type="MIPS" power="2.00" data="48" code="617" cpuOccupation="2" />
+        <PROCESSOR_TYPE type="AVR" power="0.20" data="48" code="617" cpuOccupation="2" />
       </TASK>
       <TASK id="T2">
-        <PROCESSOR_TYPE type="MIPS" power="3.00" data="48" code="617" cpuOccupation="3" />
+        <PROCESSOR_TYPE type="AVR" power="0.30" data="48" code="617" cpuOccupation="3" />
       </TASK>
       <TASK id="T3">
-        <PROCESSOR_TYPE type="MIPS" power="5.00" data="48" code="617" cpuOccupation="5" />
+        <PROCESSOR_TYPE type="AVR" power="0.50" data="48" code="617" cpuOccupation="5" />
       </TASK>
       <TASK id="T4">
-        <PROCESSOR_TYPE type="MIPS" power="9.00" data="48" code="617" cpuOccupation="9" />
+        <PROCESSOR_TYPE type="AVR" power="0.90" data="48" code="617" cpuOccupation="9" />
       </TASK>
       <TASK id="T5">
-        <PROCESSOR_TYPE type="MIPS" power="17.00" data="48" code="617" cpuOccupation="17" />
+        <PROCESSOR_TYPE type="AVR" power="1.70" data="48" code="617" cpuOccupation="17" />
       </TASK>
       <TASK id="T6">
-        <PROCESSOR_TYPE type="MIPS" power="33.00" data="48" code="617" cpuOccupation="33" />
+        <PROCESSOR_TYPE type="AVR" power="3.30" data="48" code="617" cpuOccupation="33" />
       </TASK>
       <TASK id="T7">
-        <PROCESSOR_TYPE type="MIPS" power="65.00" data="48" code="617" cpuOccupation="65" />
+        <PROCESSOR_TYPE type="AVR" power="6.50" data="48" code="617" cpuOccupation="65" />
       </TASK>
       <TASK id="T8">
-        <PROCESSOR_TYPE type="MIPS" power="8.00" data="24" code="462" cpuOccupation="8" />
+        <PROCESSOR_TYPE type="AVR" power="0.80" data="24" code="462" cpuOccupation="8" />
       </TASK>
       <TASK id="T9">
-        <PROCESSOR_TYPE type="MIPS" power="7.00" data="24" code="462" cpuOccupation="7" />
+        <PROCESSOR_TYPE type="AVR" power="0.70" data="24" code="462" cpuOccupation="7" />
       </TASK>
       <TASK id="T10">
-        <PROCESSOR_TYPE type="MIPS" power="6.00" data="24" code="462" cpuOccupation="6" />
+        <PROCESSOR_TYPE type="AVR" power="0.60" data="24" code="462" cpuOccupation="6" />
       </TASK>
       <TASK id="T11">
-        <PROCESSOR_TYPE type="MIPS" power="5.00" data="24" code="462" cpuOccupation="5" />
+        <PROCESSOR_TYPE type="AVR" power="0.50" data="24" code="462" cpuOccupation="5" />
       </TASK>
       <TASK id="T12">
-        <PROCESSOR_TYPE type="MIPS" power="4.00" data="24" code="462" cpuOccupation="4" />
+        <PROCESSOR_TYPE type="AVR" power="0.40" data="24" code="462" cpuOccupation="4" />
       </TASK>
       <TASK id="T13">
-        <PROCESSOR_TYPE type="MIPS" power="3.00" data="24" code="462" cpuOccupation="3" />
+        <PROCESSOR_TYPE type="AVR" power="0.30" data="24" code="462" cpuOccupation="3" />
       </TASK>
       <TASK id="T14">
-        <PROCESSOR_TYPE type="MIPS" power="2.00" data="24" code="462" cpuOccupation="2" />
+        <PROCESSOR_TYPE type="AVR" power="0.20" data="24" code="462" cpuOccupation="2" />
       </TASK>
     </TASK_LIST>
   </APPLICATION_CHARACTERIZATION>

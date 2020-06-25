@@ -220,9 +220,13 @@ $ make
 ```
 
 ## Descrição da aplicação para o framework Paloma
-A aplicação foi idealizada para um número de integrações ou de profundidade do método de Romberg igual a 8, resultando em 8 tarefas CTR e 7 tarefas Romberg. A arquitetura alvo escolhida foi MIPS de 4 processadores à 1500MHz. O tamanho das tarefas foi determinado pelo tamanho da seção `.text`das classes `Romberg` e `CTR`, resultando em 462 bytes e 617 bytes respectivamente. O tamanho de dados não pode ser definido em tempo de compilação, então estimou-se pelo número de bytes do objeto instanciado em tempo de execução, resultando em 24 bytes para `Romberg` e 48 bytes para `CTR`. Esses valores foram alcançados compilando a aplicação com o GCC 10.1.0 usando as flags `-std=c++11 -O3`. As estimativas de potência e uso de CPU foram feitas com base no número de cálculos que cada iteração realiza, tomando como base um único cálculo como 1% de uso e 1uW.
+A aplicação foi idealizada para um número de integrações ou de profundidade do método de Romberg igual a 8, resultando em 8 tarefas CTR e 7 tarefas Romberg. A arquitetura alvo escolhida foi AVR de 4 processadores à 16 MHz. O tamanho da NoC é de 2x2 à 4MHz, com os restantes dos parâmetros padrões.
+
+O tamanho das tarefas foi determinado pelo tamanho da seção `.text`das classes `Romberg` e `CTR`, resultando em 462 bytes e 617 bytes respectivamente. O tamanho de dados não pode ser definido em tempo de compilação, então estimou-se pelo número de bytes do objeto instanciado em tempo de execução, resultando em 24 bytes para `Romberg` e 48 bytes para `CTR`. Esses valores foram alcançados compilando a aplicação com o GCC 10.1.0 usando as flags `-std=c++11 -O3`. As estimativas de potência e uso de CPU foram feitas com base no número de cálculos que cada iteração realiza, tomando como base um único cálculo como 1% de uso e 1uW.
 
 A descrição da comunicação foi extraída a partir do código. Tarefas de CTR enviam para a próxima tarefa de CTR um valor `double` contendo a soma de seus trapézios e enviam para a primeira tarefa Romberg o valor da sua integração. As tarefas de Romberg enviam o número de médias ponderadas feitas, cada uma em `double`, para a próxima tarefa Romberg, sendo que cada tarefa seguinte realiza um cálculo a menos que a anterior. A última tarefa CTR não faz envios para nenhuma outra CTR, e a última tarefa Romberg não realiza envios.
+
+O mapeamento a partir do framewok Paloma foi gerado com as restrições de 32KB de código e 2KB de dados. Os demais parâmetros foram deixados como padrão.
 
 ## Caracterização das tarefas
 Caracterização de CTR:
@@ -265,8 +269,32 @@ Caracterização de Romberg:
   <center>CTR domina a quantidade de computação, aumentando exponencialmente a cada iteração, enquanto Romberg aumenta linearmente.</center>
 </p>
 
+O mapeamento ótimo visando a redução de energia gerou a alocação de dois processadores. Sua limitação foi o uso de CPU, agrupando as duas tarefas que mais demandam do CPU em um processador e as demais tarefas no outro.
+
+
 
 ## Exploração de modelos computacionais
 
+O mapeamento ótimo visando o balanceamento de carga usou todos os 4 processadores. A limitação para um balanceamento mais otimizado foi novamente o uso de CPU, porque as duas tarefas de maior demanda somadas usam mais do CPU que todas as outras demais tarefas somadas. Isso é explicado pelo número de laços do CTR que aumenta exponencialmente com o número de iterações. O mapeamento de tarefas agrupou as tarefas conforme a tabela
+
+| P |               Tasks              | Uso de CPU (%) |
+|:-:|:--------------------------------:|:--------------:|
+| 0 |    {CTR0, CTR3, CTR5, R0, R4}    |       35       |
+| 1 |           {CTR1, CTR6}           |       35       |
+| 2 |              {CTR7}              |       65       |
+| 3 | {CTR2, CTR4, R1, R2, R3, R5, R6} |       35       |
+
+A ferramenta Cafes gerou o seguinte mapeamento de processadores conforme o CWM, resultando em um consumo de energia de 2.85uJ:
+
+<p align="center">
+  <img src="docs/img/cwmlb.png" />
+  <center>P0 é o centro das comunicações. P2, o menos comunicante fica mais afastado levando em conta o roteamento XY.</center>
+</p>
+
+
+
 Uso do framework CAFES para explorar a aplicação através de três modelos computacionais (CWM, ACPM e CDCM), semelhante ao exemplificado na aula do Mandelbrot. Neste caso, as comunicações podem ser exploradas com a versão paralela desenvolvida no item 3. O mapeamento deve ter como base um particionamento escolhido através do framework Paloma. Aqui serão explorados os tempos de computação estimados, o mapeamento e o consumo de energia para cada modelo; 
 
+## Exploração de soluções
+
+Exploração de soluções que contemplem diferentes números de processadores versus desempenho e consumo de energia. Aqui deve ser feita uma exploração de mais de uma solução tendo como resultados gráficos que relacionem estas grandezas.
