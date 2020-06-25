@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SYSTEM_SPECIFICATION>
+  <TARGET_ARCHITECTURE>
+    <PROCESSOR_TYPE_LIST>
+      <PROCESSOR_TYPE type="MIPS">
+        <FEATURES frequency="1500.0" width="0.5" height="0.7" depth="0.5" />
+        <LIST>P1 P2 P3 P4</LIST>
+      </PROCESSOR_TYPE>
+    </PROCESSOR_TYPE_LIST>
+  </TARGET_ARCHITECTURE>
+  <APPLICATION_CHARACTERIZATION>
+    <TASK_LIST>
+      <TASK id="T0">
+        <PROCESSOR_TYPE type="MIPS" power="1.00" data="48" code="617" cpuOccupation="1" />
+      </TASK>
+      <TASK id="T1">
+        <PROCESSOR_TYPE type="MIPS" power="2.00" data="48" code="617" cpuOccupation="2" />
+      </TASK>
+      <TASK id="T2">
+        <PROCESSOR_TYPE type="MIPS" power="3.00" data="48" code="617" cpuOccupation="3" />
+      </TASK>
+      <TASK id="T3">
+        <PROCESSOR_TYPE type="MIPS" power="5.00" data="48" code="617" cpuOccupation="5" />
+      </TASK>
+      <TASK id="T4">
+        <PROCESSOR_TYPE type="MIPS" power="9.00" data="48" code="617" cpuOccupation="9" />
+      </TASK>
+      <TASK id="T5">
+        <PROCESSOR_TYPE type="MIPS" power="17.00" data="48" code="617" cpuOccupation="17" />
+      </TASK>
+      <TASK id="T6">
+        <PROCESSOR_TYPE type="MIPS" power="33.00" data="48" code="617" cpuOccupation="33" />
+      </TASK>
+      <TASK id="T7">
+        <PROCESSOR_TYPE type="MIPS" power="65.00" data="48" code="617" cpuOccupation="65" />
+      </TASK>
+      <TASK id="T8">
+        <PROCESSOR_TYPE type="MIPS" power="8.00" data="24" code="462" cpuOccupation="8" />
+      </TASK>
+      <TASK id="T9">
+        <PROCESSOR_TYPE type="MIPS" power="7.00" data="24" code="462" cpuOccupation="7" />
+      </TASK>
+      <TASK id="T10">
+        <PROCESSOR_TYPE type="MIPS" power="6.00" data="24" code="462" cpuOccupation="6" />
+      </TASK>
+      <TASK id="T11">
+        <PROCESSOR_TYPE type="MIPS" power="5.00" data="24" code="462" cpuOccupation="5" />
+      </TASK>
+      <TASK id="T12">
+        <PROCESSOR_TYPE type="MIPS" power="4.00" data="24" code="462" cpuOccupation="4" />
+      </TASK>
+      <TASK id="T13">
+        <PROCESSOR_TYPE type="MIPS" power="3.00" data="24" code="462" cpuOccupation="3" />
+      </TASK>
+      <TASK id="T14">
+        <PROCESSOR_TYPE type="MIPS" power="2.00" data="24" code="462" cpuOccupation="2" />
+      </TASK>
+    </TASK_LIST>
+  </APPLICATION_CHARACTERIZATION>
+  <APPLICATION_DESCRIPTION>
+    <COMMUNICATION_TASK_LIST>
+      <SOURCE_TASK source="T0">
+        <COMMUNICATION target="T1" volume="8" />
+        <COMMUNICATION target="T8" volume="8" />
+      </SOURCE_TASK>
+      <SOURCE_TASK source="T1">
+        <COMMUNICATION target="T2" volume="8" />
+        <COMMUNICATION target="T8" volume="8" />
+      </SOURCE_TASK>
+      <SOURCE_TASK source="T2">
+        <COMMUNICATION target="T3" volume="8" />
+        <COMMUNICATION target="T8" volume="8" />
+      </SOURCE_TASK>
+      <SOURCE_TASK source="T3">
+        <COMMUNICATION target="T4" volume="8" />
+        <COMMUNICATION target="T8" volume="8" />
+      </SOURCE_TASK>
+      <SOURCE_TASK source="T4">
+        <COMMUNICATION target="T5" volume="8" />
+        <COMMUNICATION target="T8" volume="8" />
+      </SOURCE_TASK>
+      <SOURCE_TASK source="T5">
+        <COMMUNICATION target="T6" volume="8" />
+        <COMMUNICATION target="T8" volume="8" />
+      </SOURCE_TASK>
+      <SOURCE_TASK source="T6">
+        <COMMUNICATION target="T7" volume="8" />
+        <COMMUNICATION target="T8" volume="8" />
+      </SOURCE_TASK>
+      <SOURCE_TASK source="T7">
+        <COMMUNICATION target="T8" volume="8" />
+      </SOURCE_TASK>
+      <SOURCE_TASK source="T8">
+        <COMMUNICATION target="T9" volume="56" />
+      </SOURCE_TASK>
+      <SOURCE_TASK source="T9">
+        <COMMUNICATION target="T10" volume="48" />
+      </SOURCE_TASK>
+      <SOURCE_TASK source="T10">
+        <COMMUNICATION target="T11" volume="40" />
+      </SOURCE_TASK>
+      <SOURCE_TASK source="T11">
+        <COMMUNICATION target="T12" volume="32" />
+      </SOURCE_TASK>
+      <SOURCE_TASK source="T12">
+        <COMMUNICATION target="T13" volume="24" />
+      </SOURCE_TASK>
+      <SOURCE_TASK source="T13">
+        <COMMUNICATION target="T14" volume="16" />
+      </SOURCE_TASK>
+    </COMMUNICATION_TASK_LIST>
+  </APPLICATION_DESCRIPTION>
+</SYSTEM_SPECIFICATION>
+
