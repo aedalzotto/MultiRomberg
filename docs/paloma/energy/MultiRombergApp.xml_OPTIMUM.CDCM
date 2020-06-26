@@ -1,0 +1,21 @@
+#_NoC_Size (lines columns)
+ 2 2
+
+#_CDCG_Graphic (list of: IDCore x y)
+ START 64 64
+ 0 64 160
+ 1 192 256
+ 2 192 352
+ END 320 448
+
+#_CDCG_Vertices (list of: vertices --> IDCore sourceCore - targetCore phits : computation)
+ 0 P3 - P1 8 : 31
+ 1 P1 - P3 8 : 1
+ 2 P1 - P3 8 : 33
+
+#_CDCG_Edges (list of: dependent vertices)
+ START 0
+ 0 1 2
+ 1 END
+ 2 END
+ END

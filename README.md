@@ -3,7 +3,7 @@ Angelo Elias Dalzotto
 
 Disciplina de Modelagem Computacional para Sistemas Embarcados
 
-Prof. Dr. Augusto César Marcon
+Prof. Dr. César Augusto Missio Marcon
 
 ## A Integração por Romberg
 O método de integração por Romberg é um método iterativo que visa diminuir o erro do método dos trapézios composto sem adicionar muita complexidade computacional.
@@ -12,9 +12,11 @@ Os passos para aplicar a integração consiste em resolver o método dos trapéz
 
 ## Objetivos
 
-ADICIONAR OBJETIVOS
+O objetivo desse relatório é apresentar uma aplicação de Romberg implementada sequencialmente, então idealizada para implementação paralela. Em seguida, é descrita como foi solucionado esse problema paralelamente, modelando a aplicação de forma a encontrar o particionamento ideal das tarefas e o mapeamento ótimo dos processadores.
 
-ADICIONAR EQUAÇÃO A SER RESOLVIDA
+A equação usada como base para a integração é
+
+![Equacao](docs/img/eq.png)
 
 ## Implementação em C++ sequencial
 Uma implementação sequencial foi desenvolvida para aplicar a integração por Romberg usando a linguagem C++. A função 
@@ -224,7 +226,7 @@ $ make
 ## Descrição da aplicação para o framework Paloma
 A aplicação foi idealizada para um número de integrações ou de profundidade do método de Romberg igual a 8, resultando em 8 tarefas CTR e 7 tarefas Romberg. A arquitetura alvo escolhida foi AVR de 4 processadores à 16 MHz. O tamanho da NoC é de 2x2 à 4MHz, com os restantes dos parâmetros padrões.
 
-O tamanho das tarefas foi determinado pelo tamanho da seção `.text`das classes `Romberg` e `CTR`, resultando em 462 bytes e 617 bytes respectivamente. O tamanho de dados não pode ser definido em tempo de compilação, então estimou-se pelo número de bytes do objeto instanciado em tempo de execução, resultando em 24 bytes para `Romberg` e 48 bytes para `CTR`. Esses valores foram alcançados compilando a aplicação com o GCC 10.1.0 usando as flags `-std=c++11 -O3`. As estimativas de potência e uso de CPU foram feitas com base no número de cálculos que cada iteração realiza, tomando como base um único cálculo como 1% de uso e 1uW.
+O tamanho das tarefas foi determinado pelo tamanho da seção `.text`das classes `Romberg` e `CTR`, resultando em 462 bytes e 617 bytes respectivamente. O tamanho de dados não pode ser definido em tempo de compilação, então estimou-se pelo número de bytes do objeto instanciado em tempo de execução, resultando em 24 bytes para `Romberg` e 48 bytes para `CTR`. Esses valores foram alcançados compilando a aplicação com o GCC 10.1.0 usando as flags `-std=c++11 -O3`. As estimativas de potência e uso de CPU foram feitas com base no número de cálculos que cada iteração realiza, tomando como base um único cálculo como 1% de uso e 0.1uW.
 
 A descrição da comunicação foi extraída a partir do código. Tarefas de CTR enviam para a próxima tarefa de CTR um valor `double` contendo a soma de seus trapézios e enviam para a primeira tarefa Romberg o valor da sua integração. As tarefas de Romberg enviam o número de médias ponderadas feitas, cada uma em `double`, para a próxima tarefa Romberg, sendo que cada tarefa seguinte realiza um cálculo a menos que a anterior. A última tarefa CTR não faz envios para nenhuma outra CTR, e a última tarefa Romberg não realiza envios.
 
@@ -233,28 +235,28 @@ O mapeamento a partir do framewok Paloma foi gerado com as restrições de 32KB 
 ## Caracterização das tarefas
 Caracterização de CTR:
 
-| id | code (bytes) | data (bytes) | Número de trapézios | Power/Occupation (uW/%) | Envios (double) |
-|:--:|:------------:|:------------:|:-------------------:|:-----------------------:|:---------------:|
-|  0 |      617     |      48      |          0          |            1            |        2        |
-|  1 |      617     |      48      |          1          |            2            |        2        |
-|  2 |      617     |      48      |          2          |            3            |        2        |
-|  3 |      617     |      48      |          4          |            5            |        2        |
-|  4 |      617     |      48      |          8          |            9            |        2        |
-|  5 |      617     |      48      |          16         |            17           |        2        |
-|  6 |      617     |      48      |          32         |            33           |        2        |
-|  7 |      617     |      48      |          64         |            65           |        1        |
+| id | code (bytes) | data (bytes) | Número de trapézios | Power (uW) | Occupation (%) | Envios (double) |
+|:--:|:------------:|:------------:|:-------------------:|:----------:|:-----------:|:---------------:|
+|  0 |      617     |      48      |          0          |     0.1    |       1    |        2        |
+|  1 |      617     |      48      |          1          |     0.2    |       2   |        2        |
+|  2 |      617     |      48      |          2          |     0.3    |     3            |        2        |
+|  3 |      617     |      48      |          4          |     0.5    |     5            |        2        |
+|  4 |      617     |      48      |          8          |     0.9    |     9            |        2        |
+|  5 |      617     |      48      |          16         |     1.7    |     17           |        2        |
+|  6 |      617     |      48      |          32         |     3.5    |   33           |        2        |
+|  7 |      617     |      48      |          64         |     6.5    |   65           |        1        |
 
 Caracterização de Romberg:
 
-| id | code (bytes) | data (bytes) | Número de Médias | Power/Occupation (uW/%) | Envios (double) |
-|:--:|:------------:|:------------:|:----------------:|:-----------------------:|:---------------:|
-|  0 |      462     |      24      |         7        |            8            |        7        |
-|  1 |      462     |      24      |         6        |            7            |        6        |
-|  2 |      462     |      24      |         5        |            6            |        5        |
-|  3 |      462     |      24      |         4        |            5            |        4        |
-|  4 |      462     |      24      |         3        |            4            |        3        |
-|  5 |      462     |      24      |         2        |            3            |        2        |
-|  6 |      462     |      24      |         1        |            2            |        0        |
+| id | code (bytes) | data (bytes) | Número de Médias | Power (uW) | Occupation (%) | Envios (double) |
+|:--:|:------------:|:------------:|:----------------:|:----------:|:--------------:|:---------------:|
+|  0 |      462     |      24      |         7        |     0.8    |   8            |        7        |
+|  1 |      462     |      24      |         6        |     0.7    |   7            |        6        |
+|  2 |      462     |      24      |         5        |     0.6    |   6            |        5        |
+|  3 |      462     |      24      |         4        |     0.5    |   5            |        4        |
+|  4 |      462     |      24      |         3        |     0.4    |   4            |        3        |
+|  5 |      462     |      24      |         2        |     0.3    |   3            |        2        |
+|  6 |      462     |      24      |         1        |     0.2    |   2            |        0        |
 
 <p align="center">
   <img src="docs/img/compcomm.png" />
@@ -274,9 +276,9 @@ Caracterização de Romberg:
 ## Exploração de modelos computacionais
 
 
-EXPLICAR QUE USEI O EXAUSTIVO
+### Balanceamento de carga
 
-O mapeamento ótimo gerado pelo Paloma visando o balanceamento de carga usou todos os 4 processadores. A limitação para um balanceamento mais otimizado foi novamente o uso de CPU, porque as duas tarefas de maior demanda somadas usam mais do CPU que todas as outras demais tarefas somadas. Isso é explicado pelo número de laços do CTR que aumenta exponencialmente com o número de iterações. As tarefas foram agrupadas conforme a tabela
+O particionamento ótimo gerado pelo Paloma visando o balanceamento de carga usou todos os 4 processadores. A limitação para um balanceamento mais otimizado foi o uso de CPU, porque as duas tarefas de maior demanda somadas usam mais do CPU que todas as outras demais tarefas somadas. Isso é explicado pelo número de laços do CTR que aumenta exponencialmente com o número de iterações. As tarefas foram agrupadas conforme a tabela
 
 | P |               Tasks              | Uso de CPU (%) |
 |:-:|:--------------------------------:|:--------------:|
@@ -285,34 +287,36 @@ O mapeamento ótimo gerado pelo Paloma visando o balanceamento de carga usou tod
 | 2 |              {CTR7}              |       65       |
 | 3 | {CTR2, CTR4, R1, R2, R3, R5, R6} |       35       |
 
-A ferramenta Cafes gerou o seguinte mapeamento de processadores conforme o CWM, resultando em um consumo de energia da NoC de 2.85uJ:
+A ferramenta Cafes gerou o seguinte mapeamento de processadores conforme o algoritmo exaustivo baseado no CWM, resultando em um consumo de energia da NoC de 2.85uJ:
 
 <p align="center">
   <img src="docs/img/cwmlb.png" />
   <center>P0 é o centro das comunicações. P2, o menos comunicante fica mais afastado levando em conta o roteamento XY.</center>
 </p>
 
-Em seguinda, o ACPM foi modelado para esse mapeamento de tarefas
+Em seguinda, o ACPM foi modelado para esse particionamento de tarefas
 
 <p align="center">
   <img src="docs/img/acpmlb.png" />
 </p>
 
-Que gerou o seguinte mapeamento de processadores, gerando uma energia de 2.53uJ e uma energia em idle de 2.73uJ, além de um tempo de comunicação de 260 (ciclos?):
+Que gerou o seguinte mapeamento de processadores conforme a pesquisa exaustiva, gerando uma energia de 2.53uJ e uma energia em idle de 2.73uJ, além de um tempo de comunicação de 260:
 
 <p align="center">
   <img src="docs/img/acpmlbm.png" />
   <center>Mesmo mapeamento gerado com o CWM, mas agora possuimos detalhes do consumo em idle.</center>
 </p>
 
-O modelo CDCM 
+O modelo CDCM projetado abaixo resulta no mesmo mapeamento de processadores seguindo o algoritmo exaustivo, estima uma energia de 2.38uJ e uma energia idle de 0.13uJ e um tempo de 317
 
+<p align="center">
+  <img src="docs/img/cdcmlb.png" />
+  <center>Agora possuímos mais detalhes de consumo de energia e temporização completa.</center>
+</p>
 
+### Consumo de energia
 
-
-_____________________
-
-O mapeamento ótimo gerado pelo Paloma visando a redução de energia gerou a alocação de dois processadores. Sua limitação foi o uso de CPU, agrupando as duas tarefas que mais demandam do CPU em um processador e as demais tarefas no outro. As tarefas ficaram agrupadas conforme a tabela
+O particionamento ótimo gerado pelo Paloma visando a redução de energia gerou a alocação de dois processadores. Sua limitação foi o uso de CPU, agrupando as duas tarefas que mais demandam do CPU em um processador e as demais tarefas no outro. As tarefas ficaram agrupadas conforme a tabela
 
 | P |                               Tasks                              | Uso de CPU (%) |
 |:-:|:----------------------------------------------------------------:|:--------------:|
@@ -321,15 +325,35 @@ O mapeamento ótimo gerado pelo Paloma visando a redução de energia gerou a al
 | 2 |                                {}                                |        0       |
 | 3 | {CTR0, CTR1, CTR2, CTR3, CTR4, CTR5, R0, R1, R2, R3, R4, R5, R6} |       72       |
 
-A ferramenta Cafes gerou o seguinte mapeamento dos processadores, resultando em um consumo de energia da NoC de 0.32uJ:
+A ferramenta Cafes gerou o seguinte mapeamento dos processadores usando o algoritmo exaustivo, resultando em um consumo de energia da NoC de 0.32uJ:
 
 <p align="center">
   <img src="docs/img/cwme.png" />
   <center>P3 e P1 ligados a um hop de distância.</center>
 </p>
 
-Uso do framework CAFES para explorar a aplicação através de três modelos computacionais (CWM, ACPM e CDCM), semelhante ao exemplificado na aula do Mandelbrot. Neste caso, as comunicações podem ser exploradas com a versão paralela desenvolvida no item 3. O mapeamento deve ter como base um particionamento escolhido através do framework Paloma. Aqui serão explorados os tempos de computação estimados, o mapeamento e o consumo de energia para cada modelo; 
+Modelando o ACPM abaixo, o mapeamento continua idêntico, estimando energia de 0.32uJ e energia em idle de 0.02uJ para a NoC, com tempo de comunicação de 54 segundo o algoritmo de pesquisa exaustiva
+
+<p align="center">
+  <img src="docs/img/acpge.png" />
+</p>
+
+Como as tarefas encontram-se agrupadas em poucos processadores, também é necessário explorar o CDCM para verificar como o tempo de computação prejudica a comunicação. O diagrama abaixo mostra a modelagem, resultando em energia de 0.32uJ, energia em idle de 0.04uJ e tempo de 105 a partir da pesquisa exaustiva
+
+<p align="center">
+  <img src="docs/img/cdcme.png" />
+</p>
 
 ## Exploração de soluções
 
-Exploração de soluções que contemplem diferentes números de processadores versus desempenho e consumo de energia. Aqui deve ser feita uma exploração de mais de uma solução tendo como resultados gráficos que relacionem estas grandezas.
+Os gráficos abaixo comparam o tempo e a energia usada para a comunicação nos casos de melhor balanceamento de carga e maior eficiência energética. A escolha de melhor eficiência energética parece ser melhor até para o tempo, mas isso pode ser falso, pois a escolha pelo balanceamento de carga pode melhorar a paralelização da aplicação, reduzindo drasticamente o tempo total de execução. Uma conclusão definitiva pode ser alcançada com, por exemplo, maiores detalhes microarquiteturais dos processadores e o uso de simulação.
+
+<p align="center">
+  <img src="docs/img/energia.png" />
+  <center>Particionamento para economia de energia corresponde à 14% do consumo do particionamento para balanceamento de carga</center>
+</p>
+
+<p align="center">
+  <img src="docs/img/tempo.png" />
+  <center>Tempo gasto em comunicação é 487% maior no particionamento para balanceamento de carga, mas o tempo total de execução pode ser menor devido à melhor paralelização da aplicação.</center>
+</p>

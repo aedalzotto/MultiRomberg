@@ -1,0 +1,15 @@
+#_NoC_Size (lines columns)
+ 2 2 1
+
+#_ACPG_TagsGraphic (list of: Tag x y)
+ START 64 64
+ 0 64 160
+ 1 64 256
+ 2 64 352
+ END 64 448
+
+#_ACPG_VerticesGraphic (list of: vertices --> Tag sourceCore - targetCore phits (x y)
+ 0	3 - 1	8	: 192	160
+ 1	1 - 3	8	: 192	256
+ 2	1 - 3	8	: 192	352
+
