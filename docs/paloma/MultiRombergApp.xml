@@ -3,7 +3,7 @@
   <TARGET_ARCHITECTURE>
     <PROCESSOR_TYPE_LIST>
       <PROCESSOR_TYPE type="AVR">
-        <FEATURES frequency="16.0" width="0.5" height="0.7" depth="0.5" />
+        <FEATURES frequency="16.0" width="0.5" height="0.5" depth="0.5" />
         <LIST>P0 P1 P2 P3</LIST>
       </PROCESSOR_TYPE>
     </PROCESSOR_TYPE_LIST>
@@ -107,6 +107,8 @@
       </SOURCE_TASK>
       <SOURCE_TASK source="T13">
         <COMMUNICATION target="T14" volume="16" />
+      </SOURCE_TASK>
+	  <SOURCE_TASK source="T14">
       </SOURCE_TASK>
     </COMMUNICATION_TASK_LIST>
   </APPLICATION_DESCRIPTION>

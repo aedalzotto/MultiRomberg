@@ -1,31 +1,31 @@
 
-Partition:	Energy Consumption: 2.213 mJ
+Partition:	Energy Consumption: 2.902 mJ
 			Load Balance (mean square error): 168.75
 
 	Processor: P0, Type: AVR
-	Mapped tasks: T8 T5 T3 T12 T0 
+	Mapped tasks: T4 T11 T13 T5 T0 
 	Energy: 3.5
 	Data: 192.0
 	Code: 2775.0
 	CPUOccupation: 35.0
 
 	Processor: P1, Type: AVR
-	Mapped tasks: T6 T1 
-	Energy: 3.5
-	Data: 96.0
-	Code: 1234.0
-	CPUOccupation: 35.0
-
-	Processor: P2, Type: AVR
 	Mapped tasks: T7 
 	Energy: 6.5
 	Data: 48.0
 	Code: 617.0
 	CPUOccupation: 65.0
 
-	Processor: P3, Type: AVR
-	Mapped tasks: T11 T4 T13 T10 T14 T9 T2 
+	Processor: P2, Type: AVR
+	Mapped tasks: T3 T10 T8 T12 T9 T2 T1 
 	Energy: 3.5
-	Data: 216.0
-	Code: 3544.0
+	Data: 240.0
+	Code: 3699.0
+	CPUOccupation: 35.0
+
+	Processor: P3, Type: AVR
+	Mapped tasks: T6 T14 
+	Energy: 3.5
+	Data: 72.0
+	Code: 1079.0
 	CPUOccupation: 35.0

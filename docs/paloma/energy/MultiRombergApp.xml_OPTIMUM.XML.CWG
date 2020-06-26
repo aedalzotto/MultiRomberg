@@ -3,14 +3,14 @@
   <RESULTS total_cost="0.378" status="ok" />
   <SIZE lines="2" columns="2" height="1" />
   <PROCESSOR_TYPE type="AVR">
-    <CLUSTER name="P3" load="8" power="7.2">T1 T13 T9 T14 T0 T8 T10 T11 T12 T2 T3 T4 T5</CLUSTER>
-    <CLUSTER name="P1" load="16" power="9.8">T6 T7</CLUSTER>
+    <CLUSTER name="P3" load="8" power="7.2">T11 T8 T2 T4 T14 T1 T3 T9 T5 T10 T13 T12 T0</CLUSTER>
+    <CLUSTER name="P0" load="16" power="9.8">T7 T6</CLUSTER>
   </PROCESSOR_TYPE>
   <COMMUNICATION_LIST>
     <SOURCE_CLUSTER source="P3">
-      <COMMUNICATION target="P1" volume="8" />
+      <COMMUNICATION target="P0" volume="8" />
     </SOURCE_CLUSTER>
-    <SOURCE_CLUSTER source="P1">
+    <SOURCE_CLUSTER source="P0">
       <COMMUNICATION target="P3" volume="16" />
     </SOURCE_CLUSTER>
   </COMMUNICATION_LIST>

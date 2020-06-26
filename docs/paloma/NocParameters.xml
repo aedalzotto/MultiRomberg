@@ -3,7 +3,7 @@
   <NOC>
     <TOPOLOGY_PARAMETERS id="mesh">
       <NOC lines="2" columns="2" height="1" />
-      <TILE tile_width="1.0" tile_height="1.0" tile_depth="1.0" />
+      <TILE tile_width="1.0" tile_height="1.0" tile_depth="0.0" />
       <ROUTER buffer_length="4" />
     </TOPOLOGY_PARAMETERS>
     <TIMING_PARAMETERS frequency="4.0" linking_cycles="1" routing_cycles="1" />

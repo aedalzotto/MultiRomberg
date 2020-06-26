@@ -1,6 +1,8 @@
 # Integração por Romberg como aplicação paralela em MPSoC
 Angelo Elias Dalzotto
+
 Disciplina de Modelagem Computacional para Sistemas Embarcados
+
 Prof. Dr. Augusto César Marcon
 
 ## A Integração por Romberg
@@ -269,13 +271,12 @@ Caracterização de Romberg:
   <center>CTR domina a quantidade de computação, aumentando exponencialmente a cada iteração, enquanto Romberg aumenta linearmente.</center>
 </p>
 
-O mapeamento ótimo visando a redução de energia gerou a alocação de dois processadores. Sua limitação foi o uso de CPU, agrupando as duas tarefas que mais demandam do CPU em um processador e as demais tarefas no outro.
-
-
-
 ## Exploração de modelos computacionais
 
-O mapeamento ótimo visando o balanceamento de carga usou todos os 4 processadores. A limitação para um balanceamento mais otimizado foi novamente o uso de CPU, porque as duas tarefas de maior demanda somadas usam mais do CPU que todas as outras demais tarefas somadas. Isso é explicado pelo número de laços do CTR que aumenta exponencialmente com o número de iterações. O mapeamento de tarefas agrupou as tarefas conforme a tabela
+
+EXPLICAR QUE USEI O EXAUSTIVO
+
+O mapeamento ótimo gerado pelo Paloma visando o balanceamento de carga usou todos os 4 processadores. A limitação para um balanceamento mais otimizado foi novamente o uso de CPU, porque as duas tarefas de maior demanda somadas usam mais do CPU que todas as outras demais tarefas somadas. Isso é explicado pelo número de laços do CTR que aumenta exponencialmente com o número de iterações. As tarefas foram agrupadas conforme a tabela
 
 | P |               Tasks              | Uso de CPU (%) |
 |:-:|:--------------------------------:|:--------------:|
@@ -284,14 +285,48 @@ O mapeamento ótimo visando o balanceamento de carga usou todos os 4 processador
 | 2 |              {CTR7}              |       65       |
 | 3 | {CTR2, CTR4, R1, R2, R3, R5, R6} |       35       |
 
-A ferramenta Cafes gerou o seguinte mapeamento de processadores conforme o CWM, resultando em um consumo de energia de 2.85uJ:
+A ferramenta Cafes gerou o seguinte mapeamento de processadores conforme o CWM, resultando em um consumo de energia da NoC de 2.85uJ:
 
 <p align="center">
   <img src="docs/img/cwmlb.png" />
   <center>P0 é o centro das comunicações. P2, o menos comunicante fica mais afastado levando em conta o roteamento XY.</center>
 </p>
 
+Em seguinda, o ACPM foi modelado para esse mapeamento de tarefas
 
+<p align="center">
+  <img src="docs/img/acpmlb.png" />
+</p>
+
+Que gerou o seguinte mapeamento de processadores, gerando uma energia de 2.53uJ e uma energia em idle de 2.73uJ, além de um tempo de comunicação de 260 (ciclos?):
+
+<p align="center">
+  <img src="docs/img/acpmlbm.png" />
+  <center>Mesmo mapeamento gerado com o CWM, mas agora possuimos detalhes do consumo em idle.</center>
+</p>
+
+O modelo CDCM 
+
+
+
+
+_____________________
+
+O mapeamento ótimo gerado pelo Paloma visando a redução de energia gerou a alocação de dois processadores. Sua limitação foi o uso de CPU, agrupando as duas tarefas que mais demandam do CPU em um processador e as demais tarefas no outro. As tarefas ficaram agrupadas conforme a tabela
+
+| P |                               Tasks                              | Uso de CPU (%) |
+|:-:|:----------------------------------------------------------------:|:--------------:|
+| 0 |                                {}                                |        0       |
+| 1 |                           {CTR6, CTR7}                           |       98       |
+| 2 |                                {}                                |        0       |
+| 3 | {CTR0, CTR1, CTR2, CTR3, CTR4, CTR5, R0, R1, R2, R3, R4, R5, R6} |       72       |
+
+A ferramenta Cafes gerou o seguinte mapeamento dos processadores, resultando em um consumo de energia da NoC de 0.32uJ:
+
+<p align="center">
+  <img src="docs/img/cwme.png" />
+  <center>P3 e P1 ligados a um hop de distância.</center>
+</p>
 
 Uso do framework CAFES para explorar a aplicação através de três modelos computacionais (CWM, ACPM e CDCM), semelhante ao exemplificado na aula do Mandelbrot. Neste caso, as comunicações podem ser exploradas com a versão paralela desenvolvida no item 3. O mapeamento deve ter como base um particionamento escolhido através do framework Paloma. Aqui serão explorados os tempos de computação estimados, o mapeamento e o consumo de energia para cada modelo; 
 
